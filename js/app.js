@@ -1292,10 +1292,13 @@ function cuReadyPlugIn(vendorCode,yearRange){
             $(function () {
                 var outputNameFlag = $('#fileoutputname').val();
                 var outputFileType = $('input[name=outputTypeRadio]:checked').val();
-                if (outputFileType == "xml" && outputNameFlag != null) {
+                // var outputLimitFlag = $('.agency').v
+                if (outputFileType == null && outputNameFlag != null && outputNameFlag != ""){
+                    console.log(7898,outputNameFlag);
+                     outputCsv(outputNameFlag);
+                }else if (outputFileType == "xml" && outputNameFlag != null) {
                     outputXml(outputNameFlag);
-                } else {
-                    console.log(80,"DOOM")
+                } else if (outputFileType == "csv" && outputNameFlag != null) {                  
                     outputCsv(outputNameFlag);
                 }
             });
