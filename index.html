@@ -17,19 +17,16 @@
     <link rel="stylesheet" type="text/css" href="./css/app.css">
 </head>
 
-<body>
-        <!--<button id="sp1">Sp1</button>-->
+<body>     
     <h1>NYC CHECKBOOK API</h1>
-    <h2>1.Please choose which field you want to serach and submit</h2>
+    <h2>1.Please choose which field you want to view</h2>
     <div class="searchparameter">
         <select id="searchparameterflag">
              <option value="Null" id="blank"></option>
             <option value="Budget">Budget</option>
             <option value="Contracts">Contracts-(Citywide)Response Column Names_Active and Registered Category-Expense</option>
             <option value="ContractsPending">Contracts-(Citywide)Response Column Names_Pending Category-Expense</option>
-            <option value="ContractsOther">Contracts-(Other Government Entities)Response Column Names_Active and Registered Category-Expense</option>
-            <!--<option value="Payroll">Payroll</option>
-            <option value="Revenue">Revenue</option>-->
+            <option value="ContractsOther">Contracts-(Other Government Entities)Response Column Names_Active and Registered Category-Expense</option>          
             <option value="Spending">Spending-Citywide</option>
              <option value="SpendingO">Spending-Other Government Entities</option>
         </select>
@@ -70,8 +67,7 @@
             <th>original_amount</th>
             <th>parent_contract_id</th>
             <th>pin</th>
-            <th>purpose</th>
-            <!--<th>registration_date</th>-->
+            <th>purpose</th>         
             <th>spent_to_date</th>
             <th>sub_vendor</th>
             <th>vendor</th>
@@ -94,8 +90,7 @@
             <th>purpose</th>
             <th>start_date</th>
             <th>vendor</th>
-            <th>version</th>          
-            <!--<th>mwbe_category</th>            -->
+            <th>version</th>        
         </tr>
         <tr id="contractsViewOther">
             <th>agency</th>
@@ -113,8 +108,7 @@
             <th>original_amount</th>
             <th>parent_contract_id</th>
             <th>pin</th>
-            <th>purpose</th>
-            <!--<th>registration_date</th>-->
+            <th>purpose</th>       
             <th>spent_to_date</th>
             <th>sub_vendor</th>
             <th>vendor</th>
@@ -124,11 +118,13 @@
     </table>
 
     <div id="fileoutputarea">
-        <h2>2.Please choose file type you want to export</h2>
+        <h2>2.Please give an export file name, you can also choose file type for export</h2>
+        <h3>User Attention! If you don't change file type, The default type is CVS!</h3>
         <form action="#" id="outputType">
             <input type="radio" name="outputTypeRadio" value="xml" id="radio-xml" />XML
             <input type="radio" name="outputTypeRadio" value="csv" id="radio-csv" />CSV
-            <br> Name of the output file:<br>
+            <br> Name of the export file:<br>
+            <!--(Max Name Length is 20)-->
             <input type="text" name="fileoutputname" id="fileoutputname" />
         </form>
 

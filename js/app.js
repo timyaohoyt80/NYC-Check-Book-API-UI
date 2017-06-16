@@ -193,7 +193,7 @@ $(document).ready(function () {
 </request>`;
 
 function cuReady(){
-    var yearArray = ["2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"];
+    var yearArray = ["2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027"];
     var vendorCodeArray = ["VS00013433","VC00168092","0003387756","0001196340"];
         for (var i = 0; i < yearArray.length; i++){
             for (var j = 0; j < vendorCodeArray.length; j++){
@@ -311,7 +311,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
     $("#TableTest").hide();
     var shoot = (function () {
         $('#searchparameterflag').change(function () {
-
+            console.log("lova arrow shoot")
             flagBit = $(this).find('option:selected').text();
             console.log(90, flagBit);
             if (flagBit == "Budget") {
@@ -1084,6 +1084,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
     });
     shoot();
     function budgetMode(budgetRequestNow) {
+        console.log("TOAST");
         $('#submit').click(function () {
             $.ajax({
                 type: "POST",
@@ -1096,6 +1097,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
                 error: function () { alert("No data found."); },
                 success: function (xml) {
                     var result = (new XMLSerializer()).serializeToString(xml);
+                    console.log("BBOM",result);
                     xmlDoc = $.parseXML(result),
                         $xml = $(xmlDoc),
                         $response = $xml.find("response");
@@ -1293,6 +1295,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
                 if (outputFileType == "xml" && outputNameFlag != null) {
                     outputXml(outputNameFlag);
                 } else {
+                    console.log(80,"DOOM")
                     outputCsv(outputNameFlag);
                 }
             });
