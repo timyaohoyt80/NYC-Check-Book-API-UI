@@ -4,6 +4,10 @@ $(document).ready(function () {
     var b = 2;
     var vendorCode;
     var yearRange;
+    var spendingRequest;
+    //   $("#sp1").click(function(){
+    //       cuReady();
+    //   });
     var budgetRequestNow = `<request>
     <type_of_data>Budget</type_of_data>
     <max_records>50</max_records>
@@ -188,7 +192,32 @@ $(document).ready(function () {
     </response_columns>
 </request>`;
 
-    var spendingRequest = `<request>
+function cuReady(){
+    var yearArray = ["2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"];
+    var vendorCodeArray = ["VS00013433","VC00168092","0003387756","0001196340"];
+        for (var i = 0; i < yearArray.length; i++){
+            for (var j = 0; j < vendorCodeArray.length; j++){
+                    if(yearArray[i] == vendorCodeArray[j]){
+                        console.log('error!');
+                    }else{
+                            // console.log(i,j);
+                            var vendorCode=yearArray[i];
+                            var yearRange=vendorCodeArray[j];
+                            console.log(88,vendorCode,yearRange); 
+                            // if(yearArray[i]=="2014"&&vendorCodeArray[j]=="VS00013433"){
+                            //     var vendorCode=yearArray[i];
+                            //     var yearRange=vendorCodeArray[j];
+                            //     console.log(88,vendorCode,yearRange);                                
+                            // }
+                            
+                    }
+                    
+            }
+        }
+};
+
+function cuReadyPlugIn(vendorCode,yearRange){
+        var spendingRequest = `<request>
     <type_of_data>Spending</type_of_data>
     <records_from>1</records_from>
     <max_records>1000</max_records>
@@ -225,6 +254,59 @@ $(document).ready(function () {
         <column>industry</column>        
     </response_columns>
 </request>`;
+};
+
+
+
+//     function cuReady() {
+//         for (i = 2014; i <2025; i++) {(
+//             function(i){
+//                 console.log(66,i);
+// //         var spendingRequest = `<request>
+// //     <type_of_data>Spending</type_of_data>
+// //     <records_from>1</records_from>
+// //     <max_records>1000</max_records>
+// //     <search_criteria>
+// //         <criteria>
+// //             <name>payee_code</name>
+// //             <type>value</type>
+// //             <value>VS00013433</value>
+// //         </criteria>
+// //         <criteria>
+// //             <name>calendar_year</name>
+// //             <type>value</type>
+// //             <value>${i}</value>
+// //         </criteria>
+// //     </search_criteria>
+// //     <response_columns>
+// //         <column>agency</column>
+// //         <column>fiscal_year</column>
+// //         <column>spending_category</column>
+// //         <column>document_id</column>
+// //         <column>payee_name</column>
+// //         <column>check_amount</column>
+// //         <column>department</column>
+// //         <column>sub_vendor</column>
+// //         <column>sub_contract_reference_id</column>
+// //         <column>expense_category</column>
+// //         <column>calendar_year</column>
+// //         <column>contract_ID</column>
+// //         <column>contract_purpose</column>
+// //         <column>issue_date</column>
+// //         <column>capital_project</column>
+// //         <column>mwbe_category</column>
+// //         <column>associated_prime_vendor</column>
+// //         <column>industry</column>        
+// //     </response_columns>
+// // </request>`;
+//             });
+//             // var spendingRequest;
+            
+//         }
+//         // console.log(spendingRequest);
+//     };
+
+
 
     $("#TableTest").hide();
     var shoot = (function () {
@@ -983,8 +1065,20 @@ $(document).ready(function () {
             else if (flagBit == "Contracts-(Other Government Entities)Response Column Names_Active and Registered Category-Expense") {
                 alert("No Matched Data Found!");
             }
-            else if (flagBit == "Spending") {
-                alert("Spending");
+            else if (flagBit == "Spending-Citywide") {
+                cuReady();  
+                 console.log(99,vendorCode,yearRange);              
+                cuReadyPlugIn(vendorCode,yearRange);
+                console.log(spendingRequest);
+                spendingCityWideMode(spendingRequest);
+                $("#TableTest").show();
+                $("#budgetView").hide();
+                $("#contractsView").hide();
+                $("#contractsViewPending").show();
+                $("#contractsViewOther").hide();
+            }
+            else if (flagBit == "Spending-Other Government Entities") {
+                alert("Spending-Other Government Entities");
             }
         });
     });
@@ -1136,107 +1230,53 @@ $(document).ready(function () {
         outputFlagBit();
     };
 
-    function payrollMode() {
+    function spendingCityWideMode(spendingRequest) {
         $('#submit').click(function () {
-            console.log(3, 'BOOM');
+            console.log(5, 'spendingCityWideMode', spendingRequest);
             $.ajax({
                 type: "POST",
                 url: "http://www.checkbooknyc.com/api",
-                data: `<request>
-        <type_of_data>Contracts</type_of_data>
-      <records_from>1</records_from>
-      <max_records>100</max_records>
-      <search_criteria>
-        <criteria>
-              <name>status</name>
-              <type>value</type>
-              <value>active</value>
-          </criteria>
-          <criteria>
-              <name>category</name>
-              <type>value</type>
-              <value>expense</value>
-          </criteria>
-          <criteria>
-              <name>fiscal_year</name>
-              <type>value</type>
-              <value>2011</value>
-          </criteria> 
-        </search_criteria>
-
-        <response_columns>
-            <column>agency</column>
-               <column>vendor</column>
-               <column>contract_id</column>
-               <column>version</column>
-        <column>purpose</column>
-            <column>parent_contract_id</column>
-               <column>original_amount</column>
-               <column>current_amount</column>
-        <column>spent_to_date</column>
-            <column>registration_date</column>
-            <column>apt_pin</column>
-               <column>pin</column>
-            <column>contract_type</column>
-            <column>award_method</column>
-            <column>expense_category</column>
-               <column>start_date</column>
-               <column>end_date</column>
-               <column>industry</column>
-               <column>year</column>
-               <column>document_code</column>
-               <column>mwbe_category</column>
-               <column>sub_vendor</column>
-               <column>sub_contract_reference_id</column>
-               <column>associated_prime_vendor</column>
-        </response_columns>
-        </request>`,
+                data: spendingRequest,
                 contentType: "text/xml",
                 crossDomain: true,
                 dataType: "xml",
                 cache: false,
                 error: function () { alert("No data found."); },
                 success: function (xml) {
+                    console.log(99);
                     var result = (new XMLSerializer()).serializeToString(xml);
                     xmlDoc = $.parseXML(result),
                         $xml = $(xmlDoc),
                         $response = $xml.find("response");
                     $response.find("transaction").each(function () {
-                        // var contractsTransactionFlagBitArray = ["agency", "apt_pin", "associated_prime_vendor", "award_method", "contract_id", "contract_type", "current_amount", "document_code", "end_date", "expense_category", "industry", "mwbe_category", "original_amount", "parent_contract_id", "pin", "purpose", "registration_date", "spent_to_date", "start_date", "sub_vendor", "vendor", "version", "year"];
-                        // $.each(contractsTransactionFlagBitArray, function(index,value){
-                        //     var TK =[];
-                        //     TK = $(this).find(value).text();
-                        //     console.info(TK);
-                        // });                    
                         var agency = $(this).find("agency").text();
-                        var aptPin = $(this).find("apt_pin").text();
-                        var department = $(this).find("associated_prime_vendor").text();
-                        var expenseCategory = $(this).find("award_method").text();
-                        var budgetCode = $(this).find("contract_id").text();
-                        var budgetNode = $(this).find("contract_type").text();
-                        var modified = $(this).find("current_amount").text();
-                        var adopted = $(this).find("document_code").text();
-                        var preEncumbered = $(this).find("end_date").text();
+                        var aptPin = $(this).find("associated_prime_vendor").text();
+                        var department = $(this).find("calendar_year").text();
+                        // var expenseCategory = $(this).find("award_method").text();
+                        var budgetCode = $(this).find("contract_ID").text();
+                        var budgetNode = $(this).find("contract_purpose").text();
+                        var modified = $(this).find("check_amount").text();
+                        var adopted = $(this).find("department").text();
+                        var preEncumbered = $(this).find("document_id").text();
                         var encumbered = $(this).find("expense_category").text();
-                        var cashExpense = $(this).find("industry").text();
-                        var postAdjustment = $(this).find("mwbe_category").text();
-                        var accruedExpense = $(this).find("original_amount").text();
-                        var pci = $(this).find("parent_contract_id").text();
-                        var pin = $(this).find("pin").text();
-                        var purpose = $(this).find("purpose").text();
-                        var rd = $(this).find("registration_date").text();
+                        var cashExpense = $(this).find("fiscal_year").text();
+                        var postAdjustment = $(this).find("industry").text();
+                        var accruedExpense = $(this).find("issue_date").text();
+                        var pci = $(this).find("mwbe_category").text();
+                        var pin = $(this).find("payee_name").text();
+                        var purpose = $(this).find("spending_category").text();
+                        var rd = $(this).find("sub_vendor").text();
                         var std = $(this).find("spent_to_date").text();
                         var sb = $(this).find("sub_vendor").text();
-                        var vendor = $(this).find("vendor").text();
-                        var version = $(this).find("version").text();
-                        var year = $(this).find("year").text();
+                        // var vendor = $(this).find("vendor").text();
+                        // var version = $(this).find("version").text();
+                        // var year = $(this).find("year").text();
 
                         var tr = $("<tr/>");
-                        tr.append("<td>" + agency + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + expenseCategory
-                            + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                        tr.append("<td>" + agency + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
                             + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + postAdjustment + "</td>"
                             + "<td>" + accruedExpense + "</td>" + "<td>" + pci + "</td>" + "<td>" + pin + "</td>" + "<td>" + purpose + "</td>" + "<td>" + rd + "</td>"
-                            + "<td>" + std + "</td>" + "<td>" + sb + "</td>" + "<td>" + vendor + "</td>" + "<td>" + version + "</td>" + "<td>" + year + "</td>");
+                            + "<td>" + std + "</td>" + "<td>" + sb + "</td>");
                         $("#TableTest").append(tr);
                     });
                 }
