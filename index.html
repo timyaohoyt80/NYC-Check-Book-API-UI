@@ -14,21 +14,15 @@
     <!--<link rel="stylesheet" href="./lib/jquery-ui.css">-->
     <!--online-->
     <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
-    <style>
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
 </head>
 
 <body>
-    <h1 style="font-size:48px">NYC CHECKBOOK API</h1>
-    <h2 style="font-size:36px">1.Please choose which field you want to serach and submit</h2>
+    <h1>NYC CHECKBOOK API</h1>
+    <h2>1.Please choose which field you want to serach and submit</h2>
     <div class="searchparameter">
-        <select id="searchparameterflag" style="font-size:36px">
-             <option value="Null" style="display:none"></option>
+        <select id="searchparameterflag">
+             <option value="Null" id="blank"></option>
             <option value="Budget">Budget</option>
             <option value="Contracts">Contracts-(Citywide)Response Column Names_Active and Registered Category-Expense</option>
             <option value="ContractsPending">Contracts-(Citywide)Response Column Names_Pending Category-Expense</option>
@@ -37,11 +31,11 @@
             <option value="Revenue">Revenue</option>-->
             <option value="Spending">Spending</option>
         </select>
-        <button id="submit" style="font-size:24px;margin-top:24px;margin-bottom:24px">Submit</button>
+        <button id="submit">Submit</button>
     </div>
-    <table style="width:100%" id="TableTest">
+    <table id="TableTest">
         <tr>
-            <th style="font-size:48px">Return result</th>
+            <th id="returnhead">Return result</th>
         </tr>
         <tr id="budgetView">
             <th>agency</th>
@@ -128,15 +122,15 @@
     </table>
 
     <div id="fileoutputarea">
-        <h2 style="font-size:36px">2.Please choose file type you want to export</h2>
-        <form action="#" id="outputType" style="font-size:28px">
+        <h2>2.Please choose file type you want to export</h2>
+        <form action="#" id="outputType">
             <input type="radio" name="outputTypeRadio" value="xml" id="radio-xml" />XML
             <input type="radio" name="outputTypeRadio" value="csv" id="radio-csv" />CSV
             <br> Name of the output file:<br>
             <input type="text" name="fileoutputname" id="fileoutputname" />
         </form>
 
-        <button id="convert" style="font-size:28px; margin-top:16px">Save</button>
+        <button id="convert">Save</button>
     </div>
     <script src="./js/app.js"></script>
 </body>
