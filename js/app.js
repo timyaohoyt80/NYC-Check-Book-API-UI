@@ -1,7 +1,9 @@
 $(document).ready(function () {
     var flagBit;
-    var a=2013;
-    var b=2;
+    var a = 2013;
+    var b = 2;
+    var vendorCode;
+    var yearRange;
     var budgetRequestNow = `<request>
     <type_of_data>Budget</type_of_data>
     <max_records>50</max_records>
@@ -10,7 +12,7 @@ $(document).ready(function () {
         <criteria>
             <name>year</name>
             <type>value</type>
-            <value>${a+b}</value>
+            <value>${a + b}</value>
         </criteria>
     </search_criteria>
     <criteria>
@@ -135,7 +137,7 @@ $(document).ready(function () {
         </response_columns>
         </request>`;
 
-        var contractsRequestOther = `<request>
+    var contractsRequestOther = `<request>
     <type_of_data>Contracts_OGE</type_of_data>
     <records_from>1</records_from>
     <max_records>500</max_records>
@@ -186,7 +188,7 @@ $(document).ready(function () {
     </response_columns>
 </request>`;
 
-    var spendingRequest=`<request>
+    var spendingRequest = `<request>
     <type_of_data>Spending</type_of_data>
     <records_from>1</records_from>
     <max_records>1000</max_records>
@@ -194,32 +196,33 @@ $(document).ready(function () {
         <criteria>
             <name>payee_code</name>
             <type>value</type>
-            <value>VS00013433</value>
+            <value>${vendorCode}</value>
         </criteria>
         <criteria>
             <name>calendar_year</name>
             <type>value</type>
-            <value>2014</value>
+            <value>${yearRange}</value>
         </criteria>
-
     </search_criteria>
     <response_columns>
         <column>agency</column>
         <column>fiscal_year</column>
+        <column>spending_category</column>
         <column>document_id</column>
         <column>payee_name</column>
-        <column>department</column>
         <column>check_amount</column>
-        <column>expense_category</column>
-        <column>contract_ID</column>
-        <column>capital_project</column>
-        <column>industry</column>
-        <column>issue_date</column>
-        <column>spending_category</column>
-        <column>mwbe_category</column>
+        <column>department</column>
         <column>sub_vendor</column>
-        <column>associated_prime_vendor</column>
         <column>sub_contract_reference_id</column>
+        <column>expense_category</column>
+        <column>calendar_year</column>
+        <column>contract_ID</column>
+        <column>contract_purpose</column>
+        <column>issue_date</column>
+        <column>capital_project</column>
+        <column>mwbe_category</column>
+        <column>associated_prime_vendor</column>
+        <column>industry</column>        
     </response_columns>
 </request>`;
 

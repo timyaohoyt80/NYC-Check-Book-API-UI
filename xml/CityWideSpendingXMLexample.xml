@@ -1,0 +1,37 @@
+<request>
+    <type_of_data>Spending</type_of_data>
+    <records_from>1</records_from>
+    <max_records>1000</max_records>
+    <search_criteria>
+        <criteria>
+            <name>payee_code</name>
+            <type>value</type>
+            <value>VS00013433</value>
+        </criteria>
+        <criteria>
+            <name>calendar_year</name>
+            <type>value</type>
+            <value>2014</value>
+        </criteria>
+    </search_criteria>
+    <response_columns>
+        <column>agency</column>
+        <column>fiscal_year</column>
+        <column>spending_category</column>
+        <column>document_id</column>
+        <column>payee_name</column>
+        <column>check_amount</column>
+        <column>department</column>
+        <column>sub_vendor</column>
+        <column>sub_contract_reference_id</column>
+        <column>expense_category</column>
+        <column>calendar_year</column>
+        <column>contract_ID</column>
+        <column>contract_purpose</column>
+        <column>issue_date</column>
+        <column>capital_project</column>
+        <column>mwbe_category</column>
+        <column>associated_prime_vendor</column>
+        <column>industry</column>        
+    </response_columns>
+</request>
