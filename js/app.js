@@ -1403,34 +1403,46 @@ $(document).ready(function () {
                     var result = (new XMLSerializer()).serializeToString(xml);
                     xmlDoc = $.parseXML(result),
                         $xml = $(xmlDoc),
-                        $response = $xml.find("response");                    
-                        $response.find("transaction").each(function () {
-                            var agency = $(this).find("agency").text();
-                            var aptPin = $(this).find("associated_prime_vendor").text();
-                            var department = $(this).find("calendar_year").text();
-                            // var expenseCategory = $(this).find("award_method").text();
-                            var budgetCode = $(this).find("contract_ID").text();
-                            var budgetNode = $(this).find("contract_purpose").text();
-                            var modified = $(this).find("check_amount").text();
-                            var adopted = $(this).find("department").text();
-                            var preEncumbered = $(this).find("document_id").text();
-                            var encumbered = $(this).find("expense_category").text();
-                            var cashExpense = $(this).find("fiscal_year").text();
-                            var postAdjustment = $(this).find("industry").text();
-                            var accruedExpense = $(this).find("issue_date").text();
-                            var pci = $(this).find("mwbe_category").text();
-                            var pin = $(this).find("payee_name").text();
-                            var purpose = $(this).find("spending_category").text();
-                            var rd = $(this).find("sub_vendor").text();
-                            var std = $(this).find("spent_to_date").text();
-                            var sb = $(this).find("sub_vendor").text();                           
+                        // $response = $xml.find("response");                    
+                        $xml.find("transaction").each(function () {
+                            console.log(6770);
+                            var spendingArray = ["agency","associated_prime_vendor","calendar_year","contract_ID","contract_purpose","check_amount","department","document_id","expense_category","fiscal_year","industry","issue_date","mwbe_category","payee_name","spending_category","sub_vendor","spent_to_date"];
+                            console.log(6771);
+                            for(var i = 0; i < spendingArray.length; i++){
+                                console.log(6772);
+                                $spendingArray = $(spendingArray);
+                                var spendingArrayApply = $(this).find(spendingArray[i]).text();
+                                var tr = $("<tr/>");
+                                tr.append("<td>" + spendingArrayApply + "</td>");
+                                console.log(6773);
+                                $("#TableTest").append(tr);
+                            };
+                            // var agency = $(this).find("agency").text();
+                            // var aptPin = $(this).find("associated_prime_vendor").text();
+                            // var department = $(this).find("calendar_year").text();
+                            // // var expenseCategory = $(this).find("award_method").text();
+                            // var budgetCode = $(this).find("contract_ID").text();
+                            // var budgetNode = $(this).find("contract_purpose").text();
+                            // var modified = $(this).find("check_amount").text();
+                            // var adopted = $(this).find("department").text();
+                            // var preEncumbered = $(this).find("document_id").text();
+                            // var encumbered = $(this).find("expense_category").text();
+                            // var cashExpense = $(this).find("fiscal_year").text();
+                            // var postAdjustment = $(this).find("industry").text();
+                            // var accruedExpense = $(this).find("issue_date").text();
+                            // var pci = $(this).find("mwbe_category").text();
+                            // var pin = $(this).find("payee_name").text();
+                            // var purpose = $(this).find("spending_category").text();
+                            // var rd = $(this).find("sub_vendor").text();
+                            // var std = $(this).find("spent_to_date").text();
+                            // var sb = $(this).find("sub_vendor").text();                           
 
-                            var tr = $("<tr/>");
-                            tr.append("<td>" + agency + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
-                                + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + postAdjustment + "</td>"
-                                + "<td>" + accruedExpense + "</td>" + "<td>" + pci + "</td>" + "<td>" + pin + "</td>" + "<td>" + purpose + "</td>" + "<td>" + rd + "</td>"
-                                + "<td>" + std + "</td>" + "<td>" + sb + "</td>");
-                            $("#TableTest").append(tr);
+                            // var tr = $("<tr/>");
+                            // tr.append("<td>" + agency + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                            //     + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + postAdjustment + "</td>"
+                            //     + "<td>" + accruedExpense + "</td>" + "<td>" + pci + "</td>" + "<td>" + pin + "</td>" + "<td>" + purpose + "</td>" + "<td>" + rd + "</td>"
+                            //     + "<td>" + std + "</td>" + "<td>" + sb + "</td>");
+                            // $("#TableTest").append(tr);
                         });
                     // };
                 }
