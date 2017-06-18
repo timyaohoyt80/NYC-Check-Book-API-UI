@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="./css/app.css">
 </head>
 
-<body>     
+<body>
     <h1>NYC CHECKBOOK API</h1>
     <h2>1.Please choose which field you want to view</h2>
     <div class="searchparameter">
@@ -33,6 +33,20 @@
         <p id="alertSignal"></p>
         <button id="submit">Submit</button>
         <span id="dataFlagViewer" style="font-size:48px"></span>
+    </div>
+
+    <div id="fileoutputarea">
+        <h2>2.Please give an export file name, you can also choose file type for export</h2>
+        <h3>User Attention! If you don't change file type, The default type is CSV!</h3>
+        <form action="#" id="outputType">
+            <input type="radio" name="outputTypeRadio" value="xml" id="radio-xml" />XML
+            <input type="radio" name="outputTypeRadio" value="csv" id="radio-csv" checked="checked" />CSV
+            <br> Name of the export file:<br>
+            <!--(Max Name Length is 20)-->
+            <input type="text" name="fileoutputname" id="fileoutputname" />
+        </form>
+
+        <button id="convert">Save</button>
     </div>
     <table id="TableTest">
         <tr>
@@ -69,7 +83,7 @@
             <th>original_amount</th>
             <th>parent_contract_id</th>
             <th>pin</th>
-            <th>purpose</th>         
+            <th>purpose</th>
             <th>spent_to_date</th>
             <th>sub_vendor</th>
             <th>vendor</th>
@@ -92,7 +106,7 @@
             <th>purpose</th>
             <th>start_date</th>
             <th>vendor</th>
-            <th>version</th>        
+            <th>version</th>
         </tr>
         <tr id="contractsViewOther">
             <th class="agency">agency</th>
@@ -110,28 +124,36 @@
             <th>original_amount</th>
             <th>parent_contract_id</th>
             <th>pin</th>
-            <th>purpose</th>       
+            <th>purpose</th>
             <th>spent_to_date</th>
             <th>sub_vendor</th>
             <th>vendor</th>
             <th>version</th>
             <th>year</th>
         </tr>
+        <tr id="spendingCityWideView">
+            <th>agency</th>
+            <th>associated_prime_vendor</th>
+            <th>calendar_year</th>
+            <th>contract_ID</th>
+            <th>purpose</th>
+            <th>check_amount</th>
+            <th>department</th>
+            <th>document_id</th>
+            <th>expense_category</th>
+            <th>fiscal_year</th>
+            <th>industry</th>
+            <th>issue_date</th>
+            <th>mwbe_category</th>
+            <th>payee_name</th>
+            <th>spending_category</th>
+            <th>sub_vendor</th>
+            <th>sub_contract_reference_id</th>
+            <th>capital_project</th>
+        </tr>
     </table>
 
-    <div id="fileoutputarea">
-        <h2>2.Please give an export file name, you can also choose file type for export</h2>
-        <h3>User Attention! If you don't change file type, The default type is CSV!</h3>
-        <form action="#" id="outputType">
-            <input type="radio" name="outputTypeRadio" value="xml" id="radio-xml" />XML
-            <input type="radio" name="outputTypeRadio" value="csv" id="radio-csv" checked="checked" />CSV
-            <br> Name of the export file:<br>
-            <!--(Max Name Length is 20)-->
-            <input type="text" name="fileoutputname" id="fileoutputname" />
-        </form>
 
-        <button id="convert">Save</button>
-    </div>
     <script src="./js/app.js"></script>
 </body>
 

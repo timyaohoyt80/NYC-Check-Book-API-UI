@@ -1139,8 +1139,11 @@ $(document).ready(function () {
                 $("#alertSignal").hide();
                 $("#budgetView").hide();
                 $("#contractsView").hide();
-                $("#contractsViewPending").show();
+                $("#contractsViewPending").hide();
                 $("#contractsViewOther").hide();
+                $("#spendingCityWideView").show();
+                console.log("Finished");
+                outputFlagBit();
             }
             else if (flagBit == "Spending-Other Government Entities") {
                 $("#TableTest").hide();
@@ -1367,14 +1370,14 @@ $(document).ready(function () {
                             var pin = $(this).find("payee_name").text();
                             var purpose = $(this).find("spending_category").text();
                             var rd = $(this).find("sub_vendor").text();
-                            var std = $(this).find("spent_to_date").text();
-                            var sb = $(this).find("sub_vendor").text();                           
+                            var std = $(this).find("sub_contract_reference_id").text();
+                            var sb = $(this).find("capital_project").text();                                      
 
                             var tr = $("<tr/>");
                             tr.append("<td>" + agency + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
                                 + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + postAdjustment + "</td>"
                                 + "<td>" + accruedExpense + "</td>" + "<td>" + pci + "</td>" + "<td>" + pin + "</td>" + "<td>" + purpose + "</td>" + "<td>" + rd + "</td>"
-                                + "<td>" + std + "</td>" + "<td>" + sb + "</td>");
+                                + "<td>" + std + "</td>"+"<td>" + sb + "</td>");
                             $("#TableTest").append(tr);
                         });
                     // };
@@ -1382,7 +1385,8 @@ $(document).ready(function () {
             });
         };
         boot();
-        outputFlagBit();
+        // console.log("Finished");
+        // outputFlagBit();
     };
 
         function spendingCityWideModeMini(spendingRequestMini) {
@@ -1422,14 +1426,13 @@ $(document).ready(function () {
                             var pin = $(this).find("payee_name").text();
                             var purpose = $(this).find("spending_category").text();
                             var rd = $(this).find("sub_vendor").text();
-                            var std = $(this).find("spent_to_date").text();
-                            var sb = $(this).find("sub_vendor").text();                           
+                            var std = $(this).find("spent_to_date").text();                                               
 
                             var tr = $("<tr/>");
                             tr.append("<td>" + agency + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
                                 + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + postAdjustment + "</td>"
                                 + "<td>" + accruedExpense + "</td>" + "<td>" + pci + "</td>" + "<td>" + pin + "</td>" + "<td>" + purpose + "</td>" + "<td>" + rd + "</td>"
-                                + "<td>" + std + "</td>" + "<td>" + sb + "</td>");
+                                + "<td>" + std + "</td>");
                             $("#TableTest").append(tr);
                         });
                     // };
@@ -1440,7 +1443,7 @@ $(document).ready(function () {
         // outputFlagBit();
     };
 
-    function outputFlagBit() {
+    var outputFlagBit = function outputFlagBit() {
         $('#convert').click(function () {
             $(function () {
                 var outputNameFlag = $('#fileoutputname').val();
