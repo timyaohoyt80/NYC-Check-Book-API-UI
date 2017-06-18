@@ -4,6 +4,7 @@ $(document).ready(function () {
     var b = 2;
     var vendorCode;
     var yearRange;
+    var recordsStartFromFlag;
     // var spendingRequest="";
     //   $("#sp1").click(function(){
     //       cuReady();
@@ -203,10 +204,33 @@ $(document).ready(function () {
                     // console.log(i,j);
                     var yearRange = parseInt(yearArray[i]);
                     var vendorCode = vendorCodeArray[j];
+                    //  if(recordsStartFromFlag==1){console.log(887)};
+                    //  if(recordsStartFromFlag==2){console.log(888)};
+                        if(recordsStartFromFlag==null){
+                               recordsStartFrom=1;
+                               console.log(991,recordsStartFrom);
+                        }else if(recordsStartFromFlag==1){
+                                recordsStartFrom=1001;
+                                 console.log(992,recordsStartFrom);
+                        }else if(recordsStartFromFlag==2){
+                                    recordsStartFrom=2001;
+                                     console.log(993,recordsStartFrom);
+                        }
+                    //     recordsStartFrom=0;
+                    // if(recordsStartFrom<1){
+                    //     console.log(991,recordsStartFrom);
+                    //     recordsStartFrom=1;
+                    // }else if(1<recordsStartFrom<2){
+                    //     console.log(992,recordsStartFrom);
+                    //     recordsStartFrom=1001;
+                    // }else if(2<recordsStartFrom<3){
+                    //     console.log(993,recordsStartFrom);
+                    //     recordsStartFrom=2001;
+                    // }
                     // console.log(vendorCode, yearRange);
                     spendingRequest = `<request>
     <type_of_data>Spending</type_of_data>
-    <records_from>1</records_from>
+    <records_from>${recordsStartFrom}</records_from>
     <max_records>1000</max_records>
     <search_criteria>
         <criteria>
@@ -1276,7 +1300,8 @@ $(document).ready(function () {
     };
 
     function spendingCityWideMode(spendingRequest) {
-        $('#submit').click(function () {
+        console.log("99A", "spendingCityWideMode", spendingRequest);
+        var boot=function () {
             console.log(5, "spendingCityWideMode", spendingRequest);
             $.ajax({
                 type: "POST",
@@ -1299,14 +1324,28 @@ $(document).ready(function () {
                     console.log(1296, countFlagProcessed);
                         if(countFlagProcessed<2){
                             console.log("one time");
+                            recordsStartFromFlag=1;
                         }else if(2<countFlagProcessed<3){
-                           console.log("two time");
+                           console.log("two time",spendingRequest);
+                        //    var add = (new XMLSerializer()).serializeToString(spendingRequest);
+                        console.log(666,spendingRequest);
+                            spendingRequestMini = spendingRequest.replace(/<records_from>[\s\S]*?<\/records_from>/, '<records_from>' + 1001 + '<\/records_from>');
+                           console.log(777,spendingRequestMini);
+                        //    var spendingRequest = addFlag;                   
+                            spendingCityWideModeMini(spendingRequestMini);
+                            console.log("GCGC");
                         }else if(3<countFlagProcessed<4){
-                             console.log("three time");
+                             console.log("three time",spendingRequest);
+                          spendingRequestMini = spendingRequest.replace(/<records_from>[\s\S]*?<\/records_from>/, '<records_from>' + 2001 + '<\/records_from>');
+                             spendingCityWideModeMini(spendingRequestMini);
                         }else if(4<countFlagProcessed<5){
-                            console.log("three time");
+                               spendingRequestMini = spendingRequest.replace(/<records_from>[\s\S]*?<\/records_from>/, '<records_from>' + 3001 + '<\/records_from>');
+                             spendingCityWideModeMini(spendingRequestMini);                           
+                        }else if (5<countFlagProcessed<6){
+                            spendingRequestMini = spendingRequest.replace(/<records_from>[\s\S]*?<\/records_from>/, '<records_from>' + 4001 + '<\/records_from>');
+                             spendingCityWideModeMini(spendingRequestMini); 
                         }
-                           
+                          
                     // if (spendingFlag == 1) {
                     //     dataFlagViewerTrigger();
                     // } else {
@@ -1341,8 +1380,64 @@ $(document).ready(function () {
                     // };
                 }
             });
-        });
+        };
+        boot();
         outputFlagBit();
+    };
+
+        function spendingCityWideModeMini(spendingRequestMini) {
+        console.log("96A", "spendingCityWideMode", spendingRequestMini);
+        var boot=function () {
+            console.log(6, "spendingCityWideMode", spendingRequestMini);
+            $.ajax({
+                type: "POST",
+                url: "http://www.checkbooknyc.com/api",
+                data: `${spendingRequestMini}`,
+                contentType: "text/xml",
+                crossDomain: true,
+                dataType: "xml",
+                cache: false,
+                error: function () { alert("No data found."); },
+                success: function (xml) {
+                    console.log(188, xml);
+                    var result = (new XMLSerializer()).serializeToString(xml);
+                    xmlDoc = $.parseXML(result),
+                        $xml = $(xmlDoc),
+                        $response = $xml.find("response");                    
+                        $response.find("transaction").each(function () {
+                            var agency = $(this).find("agency").text();
+                            var aptPin = $(this).find("associated_prime_vendor").text();
+                            var department = $(this).find("calendar_year").text();
+                            // var expenseCategory = $(this).find("award_method").text();
+                            var budgetCode = $(this).find("contract_ID").text();
+                            var budgetNode = $(this).find("contract_purpose").text();
+                            var modified = $(this).find("check_amount").text();
+                            var adopted = $(this).find("department").text();
+                            var preEncumbered = $(this).find("document_id").text();
+                            var encumbered = $(this).find("expense_category").text();
+                            var cashExpense = $(this).find("fiscal_year").text();
+                            var postAdjustment = $(this).find("industry").text();
+                            var accruedExpense = $(this).find("issue_date").text();
+                            var pci = $(this).find("mwbe_category").text();
+                            var pin = $(this).find("payee_name").text();
+                            var purpose = $(this).find("spending_category").text();
+                            var rd = $(this).find("sub_vendor").text();
+                            var std = $(this).find("spent_to_date").text();
+                            var sb = $(this).find("sub_vendor").text();                           
+
+                            var tr = $("<tr/>");
+                            tr.append("<td>" + agency + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                                + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + postAdjustment + "</td>"
+                                + "<td>" + accruedExpense + "</td>" + "<td>" + pci + "</td>" + "<td>" + pin + "</td>" + "<td>" + purpose + "</td>" + "<td>" + rd + "</td>"
+                                + "<td>" + std + "</td>" + "<td>" + sb + "</td>");
+                            $("#TableTest").append(tr);
+                        });
+                    // };
+                }
+            });
+        };
+        boot();
+        // outputFlagBit();
     };
 
     function outputFlagBit() {
