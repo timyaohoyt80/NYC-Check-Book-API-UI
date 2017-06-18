@@ -4,7 +4,7 @@ $(document).ready(function () {
     var b = 2;
     var vendorCode;
     var yearRange;
-    var spendingRequest;
+    // var spendingRequest="";
     //   $("#sp1").click(function(){
     //       cuReady();
     //   });
@@ -192,32 +192,19 @@ $(document).ready(function () {
     </response_columns>
 </request>`;
 
-function cuReady(){
-    var yearArray = ["2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027"];
-    var vendorCodeArray = ["VS00013433","VC00168092","0003387756","0001196340"];
-        for (var i = 0; i < yearArray.length; i++){
-            for (var j = 0; j < vendorCodeArray.length; j++){
-                    if(yearArray[i] == vendorCodeArray[j]){
-                        console.log('error!');
-                    }else{
-                            // console.log(i,j);
-                            var vendorCode=yearArray[i];
-                            var yearRange=vendorCodeArray[j];
-                            console.log(88,vendorCode,yearRange); 
-                            // if(yearArray[i]=="2014"&&vendorCodeArray[j]=="VS00013433"){
-                            //     var vendorCode=yearArray[i];
-                            //     var yearRange=vendorCodeArray[j];
-                            //     console.log(88,vendorCode,yearRange);                                
-                            // }
-                            
-                    }
-                    
-            }
-        }
-};
-
-function cuReadyPlugIn(vendorCode,yearRange){
-        var spendingRequest = `<request>
+     function cuReady() {
+        var yearArray = ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027"];
+        var vendorCodeArray = ["VS00013433", "VC00168092", "0003387756", "0001196340"];
+        for (var i = 0; i < yearArray.length; i++) {
+            for (var j = 0; j < vendorCodeArray.length; j++) {
+                if (yearArray[i] == vendorCodeArray[j]) {
+                    console.log('error!');
+                } else {
+                    // console.log(i,j);
+                    var yearRange = parseInt(yearArray[i]);
+                    var vendorCode = vendorCodeArray[j];
+                    // console.log(vendorCode, yearRange);
+                    spendingRequest =`<request>
     <type_of_data>Spending</type_of_data>
     <records_from>1</records_from>
     <max_records>1000</max_records>
@@ -254,57 +241,102 @@ function cuReadyPlugIn(vendorCode,yearRange){
         <column>industry</column>        
     </response_columns>
 </request>`;
-};
+            console.log("yes");
+                }
 
+            }
+        }
+    };
 
-
-//     function cuReady() {
-//         for (i = 2014; i <2025; i++) {(
-//             function(i){
-//                 console.log(66,i);
-// //         var spendingRequest = `<request>
-// //     <type_of_data>Spending</type_of_data>
-// //     <records_from>1</records_from>
-// //     <max_records>1000</max_records>
-// //     <search_criteria>
-// //         <criteria>
-// //             <name>payee_code</name>
-// //             <type>value</type>
-// //             <value>VS00013433</value>
-// //         </criteria>
-// //         <criteria>
-// //             <name>calendar_year</name>
-// //             <type>value</type>
-// //             <value>${i}</value>
-// //         </criteria>
-// //     </search_criteria>
-// //     <response_columns>
-// //         <column>agency</column>
-// //         <column>fiscal_year</column>
-// //         <column>spending_category</column>
-// //         <column>document_id</column>
-// //         <column>payee_name</column>
-// //         <column>check_amount</column>
-// //         <column>department</column>
-// //         <column>sub_vendor</column>
-// //         <column>sub_contract_reference_id</column>
-// //         <column>expense_category</column>
-// //         <column>calendar_year</column>
-// //         <column>contract_ID</column>
-// //         <column>contract_purpose</column>
-// //         <column>issue_date</column>
-// //         <column>capital_project</column>
-// //         <column>mwbe_category</column>
-// //         <column>associated_prime_vendor</column>
-// //         <column>industry</column>        
-// //     </response_columns>
-// // </request>`;
-//             });
-//             // var spendingRequest;
-            
-//         }
-//         // console.log(spendingRequest);
+//     function cuReadyPlugIn(vendorCode, yearRange) {
+//         var spendingRequest = `<request>
+//     <type_of_data>Spending</type_of_data>
+//     <records_from>1</records_from>
+//     <max_records>1000</max_records>
+//     <search_criteria>
+//         <criteria>
+//             <name>payee_code</name>
+//             <type>value</type>
+//             <value>${vendorCode}</value>
+//         </criteria>
+//         <criteria>
+//             <name>calendar_year</name>
+//             <type>value</type>
+//             <value>${yearRange}</value>
+//         </criteria>
+//     </search_criteria>
+//     <response_columns>
+//         <column>agency</column>
+//         <column>fiscal_year</column>
+//         <column>spending_category</column>
+//         <column>document_id</column>
+//         <column>payee_name</column>
+//         <column>check_amount</column>
+//         <column>department</column>
+//         <column>sub_vendor</column>
+//         <column>sub_contract_reference_id</column>
+//         <column>expense_category</column>
+//         <column>calendar_year</column>
+//         <column>contract_ID</column>
+//         <column>contract_purpose</column>
+//         <column>issue_date</column>
+//         <column>capital_project</column>
+//         <column>mwbe_category</column>
+//         <column>associated_prime_vendor</column>
+//         <column>industry</column>        
+//     </response_columns>
+// </request>`;
 //     };
+
+
+
+    //     function cuReady() {
+    //         for (i = 2014; i <2025; i++) {(
+    //             function(i){
+    //                 console.log(66,i);
+    // //         var spendingRequest = `<request>
+    // //     <type_of_data>Spending</type_of_data>
+    // //     <records_from>1</records_from>
+    // //     <max_records>1000</max_records>
+    // //     <search_criteria>
+    // //         <criteria>
+    // //             <name>payee_code</name>
+    // //             <type>value</type>
+    // //             <value>VS00013433</value>
+    // //         </criteria>
+    // //         <criteria>
+    // //             <name>calendar_year</name>
+    // //             <type>value</type>
+    // //             <value>${i}</value>
+    // //         </criteria>
+    // //     </search_criteria>
+    // //     <response_columns>
+    // //         <column>agency</column>
+    // //         <column>fiscal_year</column>
+    // //         <column>spending_category</column>
+    // //         <column>document_id</column>
+    // //         <column>payee_name</column>
+    // //         <column>check_amount</column>
+    // //         <column>department</column>
+    // //         <column>sub_vendor</column>
+    // //         <column>sub_contract_reference_id</column>
+    // //         <column>expense_category</column>
+    // //         <column>calendar_year</column>
+    // //         <column>contract_ID</column>
+    // //         <column>contract_purpose</column>
+    // //         <column>issue_date</column>
+    // //         <column>capital_project</column>
+    // //         <column>mwbe_category</column>
+    // //         <column>associated_prime_vendor</column>
+    // //         <column>industry</column>        
+    // //     </response_columns>
+    // // </request>`;
+    //             });
+    //             // var spendingRequest;
+
+    //         }
+    //         // console.log(spendingRequest);
+    //     };
 
 
 
@@ -316,6 +348,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
             console.log(90, flagBit);
             if (flagBit == "Budget") {
                 budgetMode(budgetRequestNow);
+                console.log("head",budgetRequestNow)
                 $("#TableTest").show();
                 $("#budgetView").show();
                 $("#contractsView").hide();
@@ -426,7 +459,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
 </request>`;
                     budgetMode(budgetRequestNow);
                 };
-                        outputFlagBit();
+                outputFlagBit();
 
             }
             else if (flagBit == "Contracts-(Citywide) with Active and Registered status Category-Expense") {
@@ -1066,15 +1099,16 @@ function cuReadyPlugIn(vendorCode,yearRange){
                 $("#contractsViewOther").hide();
             }
             else if (flagBit == "Contracts-(Other Government Entities)with Active and Registered status Category-Expense") {
-                 $("#TableTest").hide();
-                     $("#alertSignal").show();
-                 document.getElementById("alertSignal").innerHTML="No Matched Data Found!";         
+                $("#TableTest").hide();
+                $("#alertSignal").show();
+                document.getElementById("alertSignal").innerHTML = "No Matched Data Found!";
             }
             else if (flagBit == "Spending-Citywide") {
-                cuReady();  
-                 console.log(99,vendorCode,yearRange);              
-                cuReadyPlugIn(vendorCode,yearRange);
-                console.log(spendingRequest);
+                cuReady();
+                console.log(990,vendorCode, yearRange);
+                //  console.log(99,vendorCode,yearRange);              
+                // cuReadyPlugIn(vendorCode, yearRange);
+                console.log(880,spendingRequest);
                 spendingCityWideMode(spendingRequest);
                 $("#TableTest").show();
                 $("#alertSignal").hide();
@@ -1085,8 +1119,8 @@ function cuReadyPlugIn(vendorCode,yearRange){
             }
             else if (flagBit == "Spending-Other Government Entities") {
                 $("#TableTest").hide();
-                 $("#alertSignal").show();
-                document.getElementById("alertSignal").innerHTML="No Matched Data Found!";   
+                $("#alertSignal").show();
+                document.getElementById("alertSignal").innerHTML = "No Matched Data Found!";
             }
         });
     });
@@ -1242,22 +1276,27 @@ function cuReadyPlugIn(vendorCode,yearRange){
 
     function spendingCityWideMode(spendingRequest) {
         $('#submit').click(function () {
-            console.log(5, 'spendingCityWideMode', spendingRequest);
+            console.log(5, "spendingCityWideMode", spendingRequest);
             $.ajax({
                 type: "POST",
                 url: "http://www.checkbooknyc.com/api",
-                data: spendingRequest,
+                data: `${spendingRequest}`,
                 contentType: "text/xml",
                 crossDomain: true,
                 dataType: "xml",
                 cache: false,
                 error: function () { alert("No data found."); },
                 success: function (xml) {
-                    console.log(199);
+                    console.log(199,xml);
                     var result = (new XMLSerializer()).serializeToString(xml);
                     xmlDoc = $.parseXML(result),
                         $xml = $(xmlDoc),
                         $response = $xml.find("response");
+                        var spendingFlag = $response.find("code").text();
+                        console.log(1296,spendingFlag);
+                        if(spendingFlag==1){
+                            console.log("No data!");
+                        }
                     $response.find("transaction").each(function () {
                         var agency = $(this).find("agency").text();
                         var aptPin = $(this).find("associated_prime_vendor").text();
@@ -1299,14 +1338,14 @@ function cuReadyPlugIn(vendorCode,yearRange){
         $('#convert').click(function () {
             $(function () {
                 var outputNameFlag = $('#fileoutputname').val();
-                var outputFileType = $('input[name=outputTypeRadio]:checked').val();         
-                if (outputFileType == null && outputNameFlag != null && outputNameFlag != ""){
-                        console.log("pig");                 
-                     outputCsv(outputNameFlag);
-                }else if (outputFileType == "xml" && outputNameFlag != null && outputNameFlag != "") {
+                var outputFileType = $('input[name=outputTypeRadio]:checked').val();
+                if (outputFileType == null && outputNameFlag != null && outputNameFlag != "") {
+                    console.log("pig");
+                    outputCsv(outputNameFlag);
+                } else if (outputFileType == "xml" && outputNameFlag != null && outputNameFlag != "") {
                     outputXml(outputNameFlag);
-                } else if (outputFileType == "csv" && outputNameFlag != null && outputNameFlag != "") {     
-                    console.log("pig2");                
+                } else if (outputFileType == "csv" && outputNameFlag != null && outputNameFlag != "") {
+                    console.log("pig2");
                     outputCsv(outputNameFlag);
                 }
             });
