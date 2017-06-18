@@ -24,12 +24,13 @@
         <select id="searchparameterflag">
              <option value="Null" id="blank"></option>
             <option value="Budget">Budget</option>
-            <option value="Contracts">Contracts-(Citywide)Response Column Names_Active and Registered Category-Expense</option>
-            <option value="ContractsPending">Contracts-(Citywide)Response Column Names_Pending Category-Expense</option>
-            <option value="ContractsOther">Contracts-(Other Government Entities)Response Column Names_Active and Registered Category-Expense</option>          
+            <option value="Contracts">Contracts-(Citywide) with Active and Registered status Category-Expense</option>
+            <option value="ContractsPending">Contracts-(Citywide)with Pending status Category-Expense</option>
+            <option value="ContractsOther">Contracts-(Other Government Entities)with Active and Registered status Category-Expense</option>          
             <option value="Spending">Spending-Citywide</option>
              <option value="SpendingO">Spending-Other Government Entities</option>
         </select>
+        <p id="alertSignal"></p>
         <button id="submit">Submit</button>
     </div>
     <table id="TableTest">
@@ -122,7 +123,7 @@
         <h3>User Attention! If you don't change file type, The default type is CSV!</h3>
         <form action="#" id="outputType">
             <input type="radio" name="outputTypeRadio" value="xml" id="radio-xml" />XML
-            <input type="radio" name="outputTypeRadio" value="csv" id="radio-csv" />CSV
+            <input type="radio" name="outputTypeRadio" value="csv" id="radio-csv" checked="checked" />CSV
             <br> Name of the export file:<br>
             <!--(Max Name Length is 20)-->
             <input type="text" name="fileoutputname" id="fileoutputname" />

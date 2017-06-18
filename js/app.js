@@ -311,7 +311,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
     $("#TableTest").hide();
     var shoot = (function () {
         $('#searchparameterflag').change(function () {
-            console.log("lova arrow shoot")
+            console.log("love arrow shoot")
             flagBit = $(this).find('option:selected').text();
             console.log(90, flagBit);
             if (flagBit == "Budget") {
@@ -426,12 +426,14 @@ function cuReadyPlugIn(vendorCode,yearRange){
 </request>`;
                     budgetMode(budgetRequestNow);
                 };
+                        outputFlagBit();
 
             }
-            else if (flagBit == "Contracts-(Citywide)Response Column Names_Active and Registered Category-Expense") {
+            else if (flagBit == "Contracts-(Citywide) with Active and Registered status Category-Expense") {
                 console.log(100);
                 contractsMode(contractsRequestNow);
                 $("#TableTest").show();
+                $("#alertSignal").hide();
                 $("#contractsView").show();
                 $("#contractsViewPending").hide();
                 $("#budgetView").hide();
@@ -1054,16 +1056,19 @@ function cuReadyPlugIn(vendorCode,yearRange){
                 };
 
             }
-            else if (flagBit == "Contracts-(Citywide)Response Column Names_Pending Category-Expense") {
+            else if (flagBit == "Contracts-(Citywide)with Pending status Category-Expense") {
                 contractsModePending(contractsRequestNowPending);
                 $("#TableTest").show();
+                $("#alertSignal").hide();
                 $("#budgetView").hide();
                 $("#contractsView").hide();
                 $("#contractsViewPending").show();
                 $("#contractsViewOther").hide();
             }
-            else if (flagBit == "Contracts-(Other Government Entities)Response Column Names_Active and Registered Category-Expense") {
-                alert("No Matched Data Found!");
+            else if (flagBit == "Contracts-(Other Government Entities)with Active and Registered status Category-Expense") {
+                 $("#TableTest").hide();
+                     $("#alertSignal").show();
+                 document.getElementById("alertSignal").innerHTML="No Matched Data Found!";         
             }
             else if (flagBit == "Spending-Citywide") {
                 cuReady();  
@@ -1072,13 +1077,16 @@ function cuReadyPlugIn(vendorCode,yearRange){
                 console.log(spendingRequest);
                 spendingCityWideMode(spendingRequest);
                 $("#TableTest").show();
+                $("#alertSignal").hide();
                 $("#budgetView").hide();
                 $("#contractsView").hide();
                 $("#contractsViewPending").show();
                 $("#contractsViewOther").hide();
             }
             else if (flagBit == "Spending-Other Government Entities") {
-                alert("Spending-Other Government Entities");
+                $("#TableTest").hide();
+                 $("#alertSignal").show();
+                document.getElementById("alertSignal").innerHTML="No Matched Data Found!";   
             }
         });
     });
@@ -1097,11 +1105,11 @@ function cuReadyPlugIn(vendorCode,yearRange){
                 error: function () { alert("No data found."); },
                 success: function (xml) {
                     var result = (new XMLSerializer()).serializeToString(xml);
-                    console.log("BBOM",result);
+                    console.log("BBOM");
                     xmlDoc = $.parseXML(result),
                         $xml = $(xmlDoc),
                         $response = $xml.find("response");
-                    console.log(8, $response);
+                    console.log(8);
                     $response.find("transaction").each(function () {
                         var agency = $(this).find("agency").text();
                         var year = $(this).find("year").text();
@@ -1126,7 +1134,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
                 }
             });
         });
-        outputFlagBit();
+        // outputFlagBit();
     };
 
     function contractsMode(contractsRequestNow) {
@@ -1245,7 +1253,7 @@ function cuReadyPlugIn(vendorCode,yearRange){
                 cache: false,
                 error: function () { alert("No data found."); },
                 success: function (xml) {
-                    console.log(99);
+                    console.log(199);
                     var result = (new XMLSerializer()).serializeToString(xml);
                     xmlDoc = $.parseXML(result),
                         $xml = $(xmlDoc),
@@ -1291,14 +1299,14 @@ function cuReadyPlugIn(vendorCode,yearRange){
         $('#convert').click(function () {
             $(function () {
                 var outputNameFlag = $('#fileoutputname').val();
-                var outputFileType = $('input[name=outputTypeRadio]:checked').val();
-                // var outputLimitFlag = $('.agency').v
+                var outputFileType = $('input[name=outputTypeRadio]:checked').val();         
                 if (outputFileType == null && outputNameFlag != null && outputNameFlag != ""){
-                    console.log(7898,outputNameFlag);
+                        console.log("pig");                 
                      outputCsv(outputNameFlag);
-                }else if (outputFileType == "xml" && outputNameFlag != null) {
+                }else if (outputFileType == "xml" && outputNameFlag != null && outputNameFlag != "") {
                     outputXml(outputNameFlag);
-                } else if (outputFileType == "csv" && outputNameFlag != null) {                  
+                } else if (outputFileType == "csv" && outputNameFlag != null && outputNameFlag != "") {     
+                    console.log("pig2");                
                     outputCsv(outputNameFlag);
                 }
             });
