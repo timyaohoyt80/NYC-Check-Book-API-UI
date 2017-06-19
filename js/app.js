@@ -6,7 +6,7 @@ $(document).ready(function () {
     //budgetMode parameter create
     function budgetPayLoad() {
         var yearNow = new Date().getFullYear();
-        var yearLast = yearNow - 1;           
+        var yearLast = yearNow - 1;
         var yearArray = [yearLast, yearLast];
         var vendorCodeArray = ["681", "684", "40X", "406"];
         for (var i = 0; i < yearArray.length; i++) {
@@ -47,7 +47,7 @@ $(document).ready(function () {
         <column>encumbered</column>
         <column>cash_expense</column>               
     </response_columns>
-</request>`;                    
+</request>`;
                     budgetPayLoadMode(budgetRequest);
                 }
 
@@ -55,8 +55,8 @@ $(document).ready(function () {
         }
     };
 
-    //Contracts parameter create
-        function contractCityActiveRegisteredPayLoad() {
+    //Contracts Active City parameter create
+    function contractCityActiveRegisteredPayLoad() {
         var yearArray = ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"];
         var vendorCodeArray = ["VS00013433", "VC00168092", "0003387756", "0001196340"];
         for (var i = 0; i < yearArray.length; i++) {
@@ -124,8 +124,74 @@ $(document).ready(function () {
         }
     };
 
-        //Contracts parameter create
-        function contractCityPendingExpensePayLoad() {
+    //Contracts Active other goverement entities parameter create
+    function contractOtherActiveRegisteredPayLoad() {
+        var yearArray = ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"];
+        var vendorCodeArray = ["manpowergroup public sector, inc", "manpowergroup us inc", "experis us inc", "comsys information technology services, llc"]; for (var i = 0; i < yearArray.length; i++) {
+            for (var j = 0; j < vendorCodeArray.length; j++) {
+                if (yearArray[i] == vendorCodeArray[j]) {
+                    console.log('error!');
+                } else {
+                    var yearRange = parseInt(yearArray[i]);
+                    var vendorCode = vendorCodeArray[j];
+                    contractOtherActiveRegisteredPayLoadRequest = `<request>
+    <type_of_data>Contracts_OGE</type_of_data>
+    <records_from>1</records_from>
+    <max_records>1000</max_records>
+    <search_criteria>
+    <criteria>
+            <name>status</name>
+            <type>value</type>
+            <value>active</value>
+        </criteria>
+        <criteria>
+            <name>category</name>
+            <type>value</type>
+            <value>expense</value>
+        </criteria>
+        <criteria>
+            <name>prime_vendor</name>
+            <type>value</type>
+            <value>${vendorCode}</value>
+        </criteria>
+        <criteria>
+            <name>calendar_year</name>
+            <type>value</type>
+            <value>${yearRange}</value>
+        </criteria>
+    </search_criteria>
+    <response_columns>
+        <column>contract_id</column>
+        <column>purpose</column>
+        <column>version</column>
+        <column>parent_contract_id</column>
+        <column>original_amount</column>
+        <column>current_amount</column>
+        <column>spent_to_date</column>
+        <column>document_code</column>      
+        <column>year</column>
+        <column>entity_contract_number</column>
+        <column>prime_vendor</column>
+        <column>other_government_entities</column>
+        <column>contract_type</column>
+        <column>award_method</column>
+        <column>expense_category</column>
+        <column>start_date</column>
+        <column>end_date</column>
+        <column>contract_industry</column> 
+        <column>budget_name</column> 
+        <column>commodity_line</column>                
+    </response_columns>
+</request>`;
+                    contractOtherActiveRegisteredMode(contractOtherActiveRegisteredPayLoadRequest);
+                }
+
+            }
+        }
+    };
+
+    //Contracts parameter create
+    function contractCityPendingExpensePayLoad() {
         var yearArray = ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"];
         var vendorCodeArray = ["VS00013433", "VC00168092", "0003387756", "0001196340"];
         for (var i = 0; i < yearArray.length; i++) {
@@ -306,12 +372,13 @@ $(document).ready(function () {
                 budgetPayLoad();
                 $("#TableTest").show();
                 $("#budgetView").show();
-                $("#alertSignal").hide();              
+                $("#alertSignal").hide();
                 $("#contractsView").hide();
                 $("#contractsViewPending").hide();
                 $("#contractsViewOther").hide();
                 $("#spendingCityWideView").hide();
                 $("#spendingOtherView").hide();
+                 document.getElementById("waiting").innerHTML = "Load Complete!";
                 outputFlagBit();
             }
             else if (flagBit == "Contracts-(Citywide) with Active and Registered status Category-Expense") {
@@ -321,9 +388,10 @@ $(document).ready(function () {
                 $("#contractsView").show();
                 $("#contractsViewPending").hide();
                 $("#budgetView").hide();
-                $("#contractsViewOther").hide();            
+                $("#contractsViewOther").hide();
                 $("#spendingCityWideView").hide();
                 $("#spendingOtherView").hide();
+                 document.getElementById("waiting").innerHTML = "Load Complete!";
                 outputFlagBit();
 
             }
@@ -337,12 +405,22 @@ $(document).ready(function () {
                 $("#contractsViewOther").hide();
                 $("#spendingCityWideView").hide();
                 $("#spendingOtherView").hide();
+                document.getElementById("waiting").innerHTML = "Load Complete!";
                 outputFlagBit();
             }
             else if (flagBit == "Contracts-(Other Government Entities)with Active and Registered status Category-Expense") {
-                $("#TableTest").hide();
-                $("#alertSignal").show();
-                document.getElementById("alertSignal").innerHTML = "No Matched Data Found!";
+                contractOtherActiveRegisteredPayLoad();
+                $("#TableTest").show();
+                $("#alertSignal").hide();
+                $("#budgetView").hide();
+                $("#contractsView").hide();
+                $("#contractsViewPending").hide();
+                $("#contractsViewOther").show();
+                $("#spendingCityWideView").hide();
+                $("#spendingOtherView").hide();
+                document.getElementById("waiting").innerHTML = "Load Complete!";
+                outputFlagBit();
+            
             }
             else if (flagBit == "Spending-Citywide") {
                 cuReady();
@@ -352,7 +430,9 @@ $(document).ready(function () {
                 $("#contractsView").hide();
                 $("#contractsViewPending").hide();
                 $("#contractsViewOther").hide();
+                $("#spendingOtherView").hide();
                 $("#spendingCityWideView").show();
+                 document.getElementById("waiting").innerHTML = "Load Complete!";
                 outputFlagBit();
             }
             else if (flagBit == "Spending-Other Government Entities") {
@@ -365,6 +445,7 @@ $(document).ready(function () {
                 $("#contractsViewOther").hide();
                 $("#spendingCityWideView").hide();
                 $("#spendingOtherView").show();
+                document.getElementById("waiting").innerHTML = "Load Complete!";
                 outputFlagBit();
             }
         });
@@ -372,7 +453,7 @@ $(document).ready(function () {
     shoot();
 
     //For Budget Mode
-        function budgetPayLoadMode(budgetRequest) {
+    function budgetPayLoadMode(budgetRequest) {
         var boot = function () {
             $.ajax({
                 type: "POST",
@@ -417,10 +498,10 @@ $(document).ready(function () {
                         var preEncumbered = $(this).find("encumbered").text();
                         var encumbered = $(this).find("cash_expense").text();
                         var cashExpense = $(this).find("post_adjustment").text();
-                        var postAdjustment = $(this).find("accrued_expense").text();                      
-                        
+                        var postAdjustment = $(this).find("accrued_expense").text();
+
                         var tr = $("<tr/>");
-                        tr.append("<td>" + agency + "</td>"+ "<td>" + year + "</td>"+ "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                        tr.append("<td>" + agency + "</td>" + "<td>" + year + "</td>" + "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
                             + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + postAdjustment + "</td>");
                         $("#TableTest").append(tr);
                     });
@@ -459,10 +540,10 @@ $(document).ready(function () {
                         var preEncumbered = $(this).find("encumbered").text();
                         var encumbered = $(this).find("cash_expense").text();
                         var cashExpense = $(this).find("post_adjustment").text();
-                        var postAdjustment = $(this).find("accrued_expense").text();     
+                        var postAdjustment = $(this).find("accrued_expense").text();
 
                         var tr = $("<tr/>");
-                  tr.append("<td>" + agency + "</td>"+ "<td>" + year + "</td>"+ "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                        tr.append("<td>" + agency + "</td>" + "<td>" + year + "</td>" + "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
                             + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + postAdjustment + "</td>");
                         $("#TableTest").append(tr);
                     });
@@ -472,8 +553,8 @@ $(document).ready(function () {
         boot();
     };
 
-        //For contract-pending Mode
-        function contractCityPendingExpenseMode(contractCityPendingExpensePayLoadRequest) {
+    //For contract-pending Mode
+    function contractCityPendingExpenseMode(contractCityPendingExpensePayLoadRequest) {
         var boot = function () {
             $.ajax({
                 type: "POST",
@@ -516,17 +597,17 @@ $(document).ready(function () {
                         var modified = $(this).find("contract_type").text();
                         var adopted = $(this).find("award_method").text();
                         var preEncumbered = $(this).find("start_date").text();
-                        var encumbered = $(this).find("end_date").text();                     
+                        var encumbered = $(this).find("end_date").text();
                         var postAdjustment = $(this).find("document_code").text();
-                        var version = $(this).find("version").text();  
-                        var oa = $(this).find("original_amount").text();                       
-                        var om = $(this).find("original_modified").text();  
-                        var industry = $(this).find("industry").text();  
-                        var mc = $(this).find("mwbe_category").text();                       
-                        
+                        var version = $(this).find("version").text();
+                        var oa = $(this).find("original_amount").text();
+                        var om = $(this).find("original_modified").text();
+                        var industry = $(this).find("industry").text();
+                        var mc = $(this).find("mwbe_category").text();
+
                         var tr = $("<tr/>");
-                        tr.append("<td>" + agency + "</td>"+ "<td>" + year + "</td>"+ "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
-                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + postAdjustment + "</td>" + "<td>" + version + "</td>" + "<td>" + oa + "</td>" +"<td>" + om + "</td>"+"<td>" + industry + "</td>"+"<td>" + mc + "</td>");
+                        tr.append("<td>" + agency + "</td>" + "<td>" + year + "</td>" + "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + postAdjustment + "</td>" + "<td>" + version + "</td>" + "<td>" + oa + "</td>" + "<td>" + om + "</td>" + "<td>" + industry + "</td>" + "<td>" + mc + "</td>");
                         $("#TableTest").append(tr);
                     });
                 }
@@ -562,17 +643,17 @@ $(document).ready(function () {
                         var modified = $(this).find("contract_type").text();
                         var adopted = $(this).find("award_method").text();
                         var preEncumbered = $(this).find("start_date").text();
-                        var encumbered = $(this).find("end_date").text();                      
+                        var encumbered = $(this).find("end_date").text();
                         var postAdjustment = $(this).find("document_code").text();
-                        var version = $(this).find("version").text();  
-                        var oa = $(this).find("original_amount").text();                       
-                        var om = $(this).find("original_modified").text();  
-                        var industry = $(this).find("industry").text();  
-                        var mc = $(this).find("mwbe_category").text();       
+                        var version = $(this).find("version").text();
+                        var oa = $(this).find("original_amount").text();
+                        var om = $(this).find("original_modified").text();
+                        var industry = $(this).find("industry").text();
+                        var mc = $(this).find("mwbe_category").text();
 
                         var tr = $("<tr/>");
-                        tr.append("<td>" + agency + "</td>"+ "<td>" + year + "</td>"+ "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
-                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + postAdjustment + "</td>" + "<td>" + version + "</td>" + "<td>" + oa + "</td>" +"<td>" + om + "</td>"+"<td>" + industry + "</td>"+"<td>" + mc + "</td>");
+                        tr.append("<td>" + agency + "</td>" + "<td>" + year + "</td>" + "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + postAdjustment + "</td>" + "<td>" + version + "</td>" + "<td>" + oa + "</td>" + "<td>" + om + "</td>" + "<td>" + industry + "</td>" + "<td>" + mc + "</td>");
                         $("#TableTest").append(tr);
                     });
                 }
@@ -581,8 +662,8 @@ $(document).ready(function () {
         boot();
     };
 
-        //For Contract-cityWide Mode
-        function contractCityActiveRegisteredMode(contractCityActiveRegisteredPayLoadRequest) {
+    //For Contract-cityWide Active Mode
+    function contractCityActiveRegisteredMode(contractCityActiveRegisteredPayLoadRequest) {
         var boot = function () {
             $.ajax({
                 type: "POST",
@@ -634,11 +715,11 @@ $(document).ready(function () {
                         var sd = $(this).find("start_date").text();
                         var vendor = $(this).find("vendor").text();
                         var version = $(this).find("version").text();
-                        var apt = $(this).find("year").text();                                     
-                        
+                        var apt = $(this).find("year").text();
+
                         var tr = $("<tr/>");
-                        tr.append("<td>" + agency + "</td>"+ "<td>" + year + "</td>"+ "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
-                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + pin + "</td>" + "</td>" + "<td>" + purpose + "</td>"+ "</td>" + "<td>" + rd + "</td>"+ "</td>" + "<td>" + std + "</td>"+ "</td>" + "<td>" + sd + "</td>"+ "</td>" + "<td>" + vendor + "</td>" + "</td>" + "<td>" + version + "</td>"+"<td>" + apt + "</td>");
+                        tr.append("<td>" + agency + "</td>" + "<td>" + year + "</td>" + "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + pin + "</td>" + "</td>" + "<td>" + purpose + "</td>" + "</td>" + "<td>" + rd + "</td>" + "</td>" + "<td>" + std + "</td>" + "</td>" + "<td>" + sd + "</td>" + "</td>" + "<td>" + vendor + "</td>" + "</td>" + "<td>" + version + "</td>" + "<td>" + apt + "</td>");
                         $("#TableTest").append(tr);
                     });
                 }
@@ -683,11 +764,11 @@ $(document).ready(function () {
                         var sd = $(this).find("start_date").text();
                         var vendor = $(this).find("vendor").text();
                         var version = $(this).find("version").text();
-                        var apt = $(this).find("year").text();      
+                        var apt = $(this).find("year").text();
 
                         var tr = $("<tr/>");
-                        tr.append("<td>" + agency + "</td>"+ "<td>" + year + "</td>"+ "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
-                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + pin + "</td>" + "</td>" + "<td>" + purpose + "</td>"+ "</td>" + "<td>" + rd + "</td>"+ "</td>" + "<td>" + std + "</td>"+ "</td>" + "<td>" + sd + "</td>"+ "</td>" + "<td>" + vendor + "</td>" + "</td>" + "<td>" + version + "</td>"+"<td>" + apt + "</td>");
+                        tr.append("<td>" + agency + "</td>" + "<td>" + year + "</td>" + "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + cashExpense + "</td>" + "<td>" + pin + "</td>" + "</td>" + "<td>" + purpose + "</td>" + "</td>" + "<td>" + rd + "</td>" + "</td>" + "<td>" + std + "</td>" + "</td>" + "<td>" + sd + "</td>" + "</td>" + "<td>" + vendor + "</td>" + "</td>" + "<td>" + version + "</td>" + "<td>" + apt + "</td>");
                         $("#TableTest").append(tr);
                     });
                 }
@@ -696,6 +777,120 @@ $(document).ready(function () {
         boot();
     };
 
+    //For other-contract-active             
+    function contractOtherActiveRegisteredMode(contractOtherActiveRegisteredPayLoadRequest) {
+        var boot = function () {
+            $.ajax({
+                type: "POST",
+                url: "http://www.checkbooknyc.com/api",
+                data: `${contractOtherActiveRegisteredPayLoadRequest}`,
+                contentType: "text/xml",
+                crossDomain: true,
+                dataType: "xml",
+                cache: false,
+                error: function () { alert("No data found."); },
+                success: function (xml) {
+                    var result = (new XMLSerializer()).serializeToString(xml);
+                    xmlDoc = $.parseXML(result),
+                        $xml = $(xmlDoc),
+                        $response = $xml.find("response");
+                    var countFlag = parseInt($response.find("record_count").text());
+                    var countFlagProcessed = (countFlag / 1000) + 1;
+                    if (2 < countFlagProcessed < 3) {
+                        spendingRequestMini = contractOtherActiveRegisteredPayLoadRequest.replace(/<records_from>[\s\S]*?<\/records_from>/, '<records_from>' + 1001 + '<\/records_from>');
+                        contractOtherActiveRegisteredModeMini(spendingRequestMini);
+                    } else if (3 < countFlagProcessed < 4) {
+                        spendingRequestMini = contractOtherActiveRegisteredPayLoadRequest.replace(/<records_from>[\s\S]*?<\/records_from>/, '<records_from>' + 2001 + '<\/records_from>');
+                        contractOtherActiveRegisteredModeMini(spendingRequestMini);
+                    } else if (4 < countFlagProcessed < 5) {
+                        spendingRequestMini = contractOtherActiveRegisteredPayLoadRequest.replace(/<records_from>[\s\S]*?<\/records_from>/, '<records_from>' + 3001 + '<\/records_from>');
+                        contractOtherActiveRegisteredModeMini(spendingRequestMini);
+                    } else if (5 < countFlagProcessed < 6) {
+                        spendingRequestMini = contractOtherActiveRegisteredPayLoadRequest.replace(/<records_from>[\s\S]*?<\/records_from>/, '<records_from>' + 4001 + '<\/records_from>');
+                        contractOtherActiveRegisteredModeMini(spendingRequestMini);
+                    }
+
+                    $response.find("transaction").each(function () {
+                        var agency = $(this).find("other_government_entities").text();
+                        var year = $(this).find("prime_vendor").text();
+                        var department = $(this).find("contract_id").text();
+                        var aptPin = $(this).find("version").text();
+                        var department = $(this).find("year").text();
+                        var budgetCode = $(this).find("parent_contract_id").text();
+                        var budgetNode = $(this).find("purpose").text();
+                        var modified = $(this).find("original_amount").text();
+                        var adopted = $(this).find("current_amount").text();
+                        var preEncumbered = $(this).find("spent_to_date").text();
+                        var encumbered = $(this).find("contract_type").text();
+                        var postAdjustment = $(this).find("award_method").text();
+                        var version = $(this).find("expense_category").text();
+                        var oa = $(this).find("start_date").text();
+                        var om = $(this).find("end_date").text();
+                        var industry = $(this).find("document_code").text();
+                        var mc = $(this).find("contract_industry").text();
+                        var cl = $(this).find("commodity_line").text();
+                        var ecn = $(this).find("entity_contract_number").text();
+                        var bn = $(this).find("budget_name").text();
+
+                        var tr = $("<tr/>");
+                        tr.append("<td>" + agency + "</td>" + "<td>" + year + "</td>" + "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + postAdjustment + "</td>" + "<td>" + version + "</td>" + "<td>" + oa + "</td>" + "<td>" + om + "</td>" + "<td>" + industry + "</td>" + "<td>" + mc + "</td>"+"<td>" + cl + "</td>"+"<td>" + ecn + "</td>"+"<td>" + bn + "</td>");
+                        $("#TableTest").append(tr);
+                    });
+                }
+            });
+        };
+        boot();
+    };
+
+    function contractOtherActiveRegisteredModeMini(spendingRequestMini) {
+        var boot = function () {
+            $.ajax({
+                type: "POST",
+                url: "http://www.checkbooknyc.com/api",
+                data: `${spendingRequestMini}`,
+                contentType: "text/xml",
+                crossDomain: true,
+                dataType: "xml",
+                cache: false,
+                error: function () { alert("No data found."); },
+                success: function (xml) {
+                    var result = (new XMLSerializer()).serializeToString(xml);
+                    xmlDoc = $.parseXML(result),
+                        $xml = $(xmlDoc),
+                        $response = $xml.find("response");
+                    $response.find("transaction").each(function () {
+                        var agency = $(this).find("other_government_entities").text();
+                        var year = $(this).find("prime_vendor").text();
+                        var department = $(this).find("contract_id").text();
+                        var aptPin = $(this).find("version").text();
+                        var department = $(this).find("year").text();
+                        var budgetCode = $(this).find("parent_contract_id").text();
+                        var budgetNode = $(this).find("purpose").text();
+                        var modified = $(this).find("original_amount").text();
+                        var adopted = $(this).find("current_amount").text();
+                        var preEncumbered = $(this).find("spent_to_date").text();
+                        var encumbered = $(this).find("contract_type").text();
+                        var postAdjustment = $(this).find("award_method").text();
+                        var version = $(this).find("expense_category").text();
+                        var oa = $(this).find("start_date").text();
+                        var om = $(this).find("end_date").text();
+                        var industry = $(this).find("document_code").text();
+                        var mc = $(this).find("contract_industry").text();
+                        var cl = $(this).find("commodity_line").text();
+                        var ecn = $(this).find("entity_contract_number").text();
+                        var bn = $(this).find("budget_name").text();
+
+                        var tr = $("<tr/>");
+                  tr.append("<td>" + agency + "</td>" + "<td>" + year + "</td>" + "<td>" + department + "</td>" + "<td>" + aptPin + "</td>" + "<td>" + department + "</td>" + "<td>" + budgetCode + "</td>" + "<td>" + budgetNode + "</td>" + "<td>" + modified + "</td>" + "<td>" + adopted + "</td>" + "<td>"
+                            + preEncumbered + "</td>" + "<td>" + encumbered + "</td>" + "<td>" + postAdjustment + "</td>" + "<td>" + version + "</td>" + "<td>" + oa + "</td>" + "<td>" + om + "</td>" + "<td>" + industry + "</td>" + "<td>" + mc + "</td>"+"<td>" + cl + "</td>"+"<td>" + ecn + "</td>"+"<td>" + bn + "</td>");
+                        $("#TableTest").append(tr);
+                    });
+                }
+            });
+        };
+        boot();
+    };
     //For cityWide-Spending
     function spendingCityWideMode(spendingRequest) {
         var boot = function () {
