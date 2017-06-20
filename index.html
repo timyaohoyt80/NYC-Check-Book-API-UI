@@ -14,37 +14,46 @@
     <!--<link rel="stylesheet" href="./lib/jquery-ui.css">-->
     <!--online-->
     <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
-    <style>
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
 </head>
 
 <body>
-    <h1 style="font-size:48px">NYC CHECKBOOK API</h1>
-    <h2 style="font-size:36px">1.Please choose which field you want to serach and submit</h2>
+    <h1>NYC CHECKBOOK API</h1>
+    <h2>1.Please choose which field you want to view</h2>
     <div class="searchparameter">
-        <select id="searchparameterflag" style="font-size:36px">
-             <option value="Null" style="display:none"></option>
+        <select id="searchparameterflag">
+             <option value="Null" id="blank"></option>
             <option value="Budget">Budget</option>
-            <option value="Contracts">Contracts-(Citywide)Response Column Names_Active and Registered Category-Expense</option>
-            <option value="ContractsPending">Contracts-(Citywide)Response Column Names_Pending Category-Expense</option>
-            <option value="ContractsOther">Contracts-(Other Government Entities)Response Column Names_Active and Registered Category-Expense</option>
-            <!--<option value="Payroll">Payroll</option>
-            <option value="Revenue">Revenue</option>-->
-            <option value="Spending">Spending</option>
+            <option value="Contracts">Contracts-(Citywide) with Active and Registered status Category-Expense</option>
+            <option value="ContractsPending">Contracts-(Citywide)with Pending status Category-Expense</option>
+            <option value="ContractsOther">Contracts-(Other Government Entities)with Active and Registered status Category-Expense</option>          
+            <option value="Spending">Spending-Citywide</option>
+             <option value="SpendingO">Spending-Other Government Entities</option>
         </select>
-        <button id="submit" style="font-size:24px;margin-top:24px;margin-bottom:24px">Submit</button>
+        <!--<p id="alertSignal"></p>-->
+        <!--<button id="submit">Submit</button>-->
+        <span id="dataFlagViewer" style="font-size:48px"></span>
     </div>
-    <table style="width:100%" id="TableTest">
+
+    <div id="fileoutputarea">
+        <h2>2.Please give an export file name, you can also choose file type for export</h2>
+        <h3>User Attention! If you don't change file type, The default type is CSV!</h3>
+        <form action="#" id="outputType">
+            <input type="radio" name="outputTypeRadio" value="xml" id="radio-xml" />XML
+            <input type="radio" name="outputTypeRadio" value="csv" id="radio-csv" checked="checked" />CSV
+            <br> Name of the export file:<br>
+            <!--(Max Name Length is 20)-->
+            <input type="text" name="fileoutputname" id="fileoutputname" />
+        </form>
+        <!--<p id="waiting"></p>-->
+        <button id="convert" style="font-size:64p; font-weight: bold;">Save</button>
+    </div>
+    <table id="TableTest">
         <tr>
-            <th style="font-size:48px">Return result</th>
+            <th id="returnhead">Return result</th>
         </tr>
         <tr id="budgetView">
-            <th>agency</th>
+            <th class="agency">agency</th>
             <th>year</th>
             <th>department</th>
             <th>expense-category</th>
@@ -59,7 +68,7 @@
             <th>expenditure-amounts:accrued-expense</th>
         </tr>
         <tr id="contractsView">
-            <th>agency</th>
+            <th class="agency">agency</th>
             <th>apt_pin</th>
             <th>associated_prime_vendor</th>
             <th>award_method</th>
@@ -67,77 +76,99 @@
             <th>contract_type</th>
             <th>current_amount</th>
             <th>document_code</th>
-            <th>end_date</th>
             <th>expense_category</th>
-            <th>industry</th>
             <th>mwbe_category</th>
             <th>original_amount</th>
             <th>parent_contract_id</th>
             <th>pin</th>
             <th>purpose</th>
-            <!--<th>registration_date</th>-->
+            <th>registration_date</th>
             <th>spent_to_date</th>
-            <th>sub_vendor</th>
+            <th>start_date</th>
             <th>vendor</th>
             <th>version</th>
             <th>year</th>
         </tr>
         <tr id="contractsViewPending">
-            <th>agency</th>
-            <th>apt_pin</th>
-            <th>award_method</th>
+            <th class="agency">agency</th>
+            <th>vendor</th>
             <th>contract_id</th>
-            <th>contract_type</th>
+            <th>purpose</th>
+            <th>parent_contract_id</th>
             <th>current_amount</th>
+            <th>received_date</th>
+            <th>contract_type</th>
+            <th>award_method</th>
+            <th>start_date</th>
+            <th>end_date</th>           
             <th>document_code</th>
-            <th>end_date</th>
+            <th>version</th>
+            <th>original_amount</th>
+            <th>original_modified</th>
             <th>industry</th>
             <th>mwbe_category</th>
-            <th>original_amount</th>
-            <th>pin</th>
-            <th>purpose</th>
-            <th>start_date</th>
-            <th>vendor</th>
-            <th>version</th>          
-            <!--<th>mwbe_category</th>            -->
         </tr>
         <tr id="contractsViewOther">
-            <th>agency</th>
-            <th>apt_pin</th>
-            <th>associated_prime_vendor</th>
-            <th>award_method</th>
+            <th class="agency">other_government_entities</th>
+            <th>prime_vendor</th>
             <th>contract_id</th>
-            <th>contract_type</th>
-            <th>current_amount</th>
-            <th>document_code</th>
-            <th>end_date</th>
-            <th>expense_category</th>
-            <th>industry</th>
-            <th>mwbe_category</th>
-            <th>original_amount</th>
-            <th>parent_contract_id</th>
-            <th>pin</th>
-            <th>purpose</th>
-            <!--<th>registration_date</th>-->
-            <th>spent_to_date</th>
-            <th>sub_vendor</th>
-            <th>vendor</th>
             <th>version</th>
             <th>year</th>
+            <th>parent_contract_id</th>
+            <th>purpose</th>
+            <th>original_amount</th>
+            <th>current_amount</th>
+            <th>spent_to_date</th>
+            <th>contract_type</th>
+            <th>award_method</th>
+            <th>expense_category</th>
+            <th>start_date</th>
+            <th>end_date</th>
+            <th>document_code</th>
+            <th>contract_industry</th>
+            <th>commodity_line</th>
+            <th>entity_contract_number</th>
+            <th>budget_name</th>          
+        </tr>
+        <tr id="spendingCityWideView">
+            <th>agency</th>
+            <th>associated_prime_vendor</th>
+            <th>calendar_year</th>
+            <th>contract_ID</th>
+            <th>purpose</th>
+            <th>check_amount</th>
+            <th>department</th>
+            <th>document_id</th>
+            <th>expense_category</th>
+            <th>fiscal_year</th>
+            <th>industry</th>
+            <th>issue_date</th>
+            <th>mwbe_category</th>
+            <th>payee_name</th>
+            <th>spending_category</th>
+            <th>sub_vendor</th>
+            <th>sub_contract_reference_id</th>
+            <th>capital_project</th>
+        </tr>
+        <tr id="spendingOtherView">
+            <th>other_government_entities</th>
+            <th>spending_category</th>
+            <th>check_amount</th>
+            <th>department</th>
+            <th>commodity_line</th>
+            <th>expense_category</th>
+            <th>calendar_year</th>
+            <th>contract_id</th>
+            <th>contract_purpose</th>
+            <th>capital_project</th>
+            <th>budget_name</th>
+            <th>entity_contract_number</th>
+            <th>fiscal_year</th>
+            <th>payee_name</th>
         </tr>
     </table>
 
-    <div id="fileoutputarea">
-        <h2 style="font-size:36px">2.Please choose file type you want to export</h2>
-        <form action="#" id="outputType" style="font-size:28px">
-            <input type="radio" name="outputTypeRadio" value="xml" id="radio-xml" />XML
-            <input type="radio" name="outputTypeRadio" value="csv" id="radio-csv" />CSV
-            <br> Name of the output file:<br>
-            <input type="text" name="fileoutputname" id="fileoutputname" />
-        </form>
 
-        <button id="convert" style="font-size:28px; margin-top:16px">Save</button>
-    </div>
     <script src="./js/app.js"></script>
 </body>
 

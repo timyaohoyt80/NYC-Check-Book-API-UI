@@ -1,0 +1,40 @@
+table, 
+th, 
+td {
+     border: 1px solid black;
+        }
+table {
+    width:100%;
+}
+
+#searchparameterflag{
+    font-size:36px;
+}
+
+h1 {
+    font-size:48px;  
+}
+
+h2 {
+    font-size:36px;
+}
+
+#blank{
+    display:none;
+}
+
+#submit{
+    font-size:24px;margin-top:24px;margin-bottom:24px;
+}
+
+form{
+    font-size:28px;
+}
+
+#convert{
+    font-size:28px; margin-top:16px;
+}
+
+#returnhead{
+    font-size:48px;
+}
